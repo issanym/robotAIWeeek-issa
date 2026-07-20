@@ -2,15 +2,15 @@
 authors = ["issanym <jacinthenym@proton.me>"]
 channels = ["robostack-humble", "conda-forge"]
 name = "bullseye"
-platforms = ["linux-64"]
+platforms = ["linux-64","win-64"]
 version = "0.1.0"
 
 [tasks]
-build = "colcon build --symlink-install"
+build = "colcon build"
 follow = "ros2 run follower bullseye --ros-args -p camera_index:=2 -p show_debug_window:=true"
 
 [activation]
-scripts = ["install/setup.sh"]
+scripts = ["install/setup.sh", "install/setup.bat"]
 [activation.env]
 QT_QPA_PLATFORM="xcb"
 GDK_BACKEND="x11"
