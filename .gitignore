@@ -1,3 +1,8 @@
 # pixi environments
 .pixi/*
 !.pixi/config.toml
+#ROS files
+build/*
+log/*
+install/*
+.vscode/*

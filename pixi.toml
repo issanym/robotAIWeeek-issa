@@ -6,8 +6,17 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
+build = "colcon build --symlink-install"
+follow = "ros2 run follower bullseye --ros-args -p camera_index:=2 -p show_debug_window:=true"
+
+[activation]
+scripts = ["install/setup.sh"]
+[activation.env]
+QT_QPA_PLATFORM="xcb"
+GDK_BACKEND="x11"
 
 [dependencies]
 ros-humble-desktop = ">=0.10.0,<0.11"
 opencv = ">=4.13.0,<5"
 colcon-common-extensions = ">=0.3.0,<0.4"
+numpy = ">=2.5.1,<3"
