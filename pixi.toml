@@ -7,11 +7,12 @@ version = "0.1.0"
 
 [tasks]
 build = "colcon build"
-follow = "ros2 run follower bullseye --ros-args -p camera_index:=2 -p show_debug_window:=true"
+follow = "ros2 run follower bullseye --ros-args -p camera_index:=0 -p show_debug_window:=true" # camera index to 0 for webcam
 
 [activation]
 scripts = ["install/setup.sh", "install/setup.bat"]
-[activation.env]
+
+[target.unix.activation.env] # linux only parameters
 QT_QPA_PLATFORM="xcb"
 GDK_BACKEND="x11"
 
