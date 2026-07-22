@@ -7,14 +7,21 @@ version = "0.1.0"
 
 [tasks]
 build = "colcon build"
-follow = "ros2 run follower bullseye --ros-args -p camera_index:=0 -p show_debug_window:=true" # camera index to 0 for webcam
+camera-follow = "ros2 run follower bullseye --ros-args -p camera_index:=0 -p show_debug_window:=true" # camera index to 0 for webcam
+lidar-start = "ros2 launch sllidar_ros2 sllidar_c1_launch.py"
 
 [activation]
-scripts = ["install/setup.sh", "install/setup.bat"]
+scripts = [
+    "install/setup.sh", 
+    "install/setup.bat", 
+    #"src/sllidar_ros2/scripts/create_udev_rules.sh"
+    ]
+#[activstion.env]
 
 [target.unix.activation.env] # linux only parameters
 QT_QPA_PLATFORM="xcb"
 GDK_BACKEND="x11"
+LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
 
 [dependencies]
 ros-humble-desktop = ">=0.10.0,<0.11"
