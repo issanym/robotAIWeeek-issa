@@ -2,8 +2,6 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lebot">
 
-
-
     <xacro:property name="base_width" value=".50"/>
     <xacro:property name="base_height" value=".125"/>
     <xacro:property name="base_depth" value=".45"/>
@@ -28,7 +26,6 @@
     <xacro:property name="sensor_len" value=".03"/>
 
     <xacro:property name="PI" value="3.1415"/>
-
 
 
     <material name="red">
@@ -56,8 +53,8 @@
                 <color rgba="0 0 1 1"/>
             </material>
         </visual>
-        <!-- <collision/>
-        <inertial />-->
+        <collision><geometry><box size="${base_depth} ${base_width} ${base_height}"/></geometry></collision>
+        <!--inertial />-->
     </link>
 
     <link name="left_wheel_link">
@@ -68,8 +65,8 @@
             </geometry>
             <material name="red"/>
         </visual>
-       <!-- <collision/>
-        <inertial />-->
+       <collision><geometry><cylinder radius="${drive_wheel_rad}" length="${wheel_len}"/></geometry></collision>
+        <!--inertial />-->
     </link>
 
     <link name="right_wheel_link">
@@ -80,8 +77,8 @@
             </geometry>
             <material name="red"/>
         </visual>
-        <!--<collision/>
-        <inertial />-->
+        <collision><geometry><cylinder radius="${drive_wheel_rad}" length="${wheel_len}"/></geometry></collision>
+        <!--inertial />-->
     </link>
 
     <link name="right_support_wheel_link">
@@ -92,8 +89,8 @@
             </geometry>
             <material name="green"/>
         </visual>
-        <!--<collision/>
-        <inertial />-->
+        <collision><geometry><cylinder radius="${supp_wheel_rad}" length="${wheel_len}"/></geometry></collision>
+        <!--inertial />-->
     </link>
 
     <link name="left_support_wheel_link">
@@ -104,8 +101,8 @@
             </geometry>
             <material name="green"/>
         </visual>
-        <!--<collision/>
-        <inertial />-->
+        <collision><geometry><cylinder radius="${supp_wheel_rad}" length="${wheel_len}"/></geometry></collision>
+        <!--inertial />-->
     </link>
 
     <link name="left_support_link">
@@ -116,8 +113,8 @@
             </geometry>
             <material name="teal"/>
         </visual>
-        <!--collision/>3
-        <inertial /-->
+        <collision><geometry><box size="${side_block_depth} ${side_block_width} ${side_block_height}"/></geometry></collision>
+        <!--inertial /-->
     </link>
 
     <link name="right_support_link">
@@ -128,8 +125,8 @@
             </geometry>
             <material name="teal"/>
         </visual>
-        <!--collision/>
-        <inertial /-->
+        <collision><geometry><box size="${side_block_depth} ${side_block_width} ${side_block_height}"/></geometry></collision>
+        <!--inertial /-->
     </link>
 
     <link name="top_block_link">
@@ -140,8 +137,8 @@
             </geometry>
             <material name="teal"/>
         </visual>
-        <!--collision/>
-        <inertial /-->
+        <collision><geometry><box size="${top_block_depth} ${top_block_width} ${top_block_height}"/></geometry></collision>/>
+        <!--inertial /-->
     </link> 
 
     <link name="lidar_link">
@@ -152,8 +149,8 @@
             </geometry>
             <material name="white"/>
         </visual>
-        <!--collision/>
-        <inertial /-->
+        <collision><geometry><cylinder radius="${sensor_rad}" length="${sensor_len}"/></geometry></collision>
+        <!--inertial /-->
     </link>
 
     <link name="camera_link">
@@ -164,8 +161,8 @@
             </geometry>
             <material name="white"/>
         </visual>
-        <!--collision/>
-        <inertial /-->
+        <collision><geometry><cylinder radius="${sensor_rad}" length="${sensor_len}"/></geometry></collision>/>
+        <!--inertial /-->
     </link>
 
    
