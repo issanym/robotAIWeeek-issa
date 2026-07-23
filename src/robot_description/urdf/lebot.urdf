@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
 <robot name="service_bot">
+
+<!-- 
+
+    
+
+-->
+
     <link name="base_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -164,11 +171,11 @@
         <axis xyz="0 0 1" />
     </joint>
 
-    <joint name="base_left_support_wheel_joint" type="fixed">
+    <joint name="base_left_support_wheel_joint" type="continuous"> <!-- continuous for kinematics reason-->
         <parent link="base_link"/>
         <child link="left_support_wheel_link"/>
         <origin xyz="0.3 0.55 -0.4" rpy="1.57 0 0"/>
-        <!--axis xyz="0 0 1" /-->
+        <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_right_wheel_joint" type="continuous">
@@ -178,11 +185,11 @@
         <axis xyz="0 0 1" />
     </joint>
 
-    <joint name="base_right_support_wheel_joint" type="fixed">
+    <joint name="base_right_support_wheel_joint" type="continuous"> <!-- continuous for kinematics reason-->
         <parent link="base_link"/>
         <child link="right_support_wheel_link"/>
         <origin xyz="0.3 -0.55 -0.4" rpy="1.57 0 0"/>
-        <!--axis xyz="0 0 1" /-->
+        <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_top_block_joint" type="fixed">
