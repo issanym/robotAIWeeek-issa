@@ -5,25 +5,31 @@
     <xacro:property name="base_width" value=".50"/>
     <xacro:property name="base_height" value=".125"/>
     <xacro:property name="base_depth" value=".45"/>
+    <xacro:property name="base_mass" value="2.0"/>
 
     <xacro:property name="top_block_width" value=".50"/>
     <xacro:property name="top_block_height" value="0.20"/>
     <xacro:property name="top_block_depth" value="0.10"/>
+    <xacro:property name="top_block_mass" value="0.5"/>
     
     <xacro:property name="side_block_width" value="0.050"/>
     <xacro:property name="side_block_height" value="${1.10-(top_block_height-base_height)}"/>
     <xacro:property name="side_block_depth" value="0.10"/>
+    <xacro:property name="support_mass" value="0.3"/>
 
     <xacro:property name="drive_wheel_rad" value=".055"/>
+    <xacro:property name="wheel_mass" value="0.2"/>
     <xacro:property name="wheel_len" value=".01"/>
     <xacro:property name="supp_wheel_rad" value=".03"/>
+    <xacro:property name="supp_wheel_mass" value="0.1"/>
     <xacro:property name="wheel_offset" value=".01"/>
     <xacro:property name="drive_wheel_posZ" value="-${(((base_height/2)+wheel_offset)-(drive_wheel_rad*2))+(drive_wheel_rad)}"/>
-    <xacro:property name="supp_whell_posZ" value="-${(((base_height/2)+wheel_offset)-(supp_wheel_rad*2))+(supp_wheel_rad)}"/>
-    <xacro:property name="whell_posY" value="${base_width/2 + wheel_len/2}"/>
+    <xacro:property name="supp_wheel_posZ" value="-${(((base_height/2)+wheel_offset)-(supp_wheel_rad*2))+(supp_wheel_rad)}"/>
+    <xacro:property name="wheel_posY" value="${base_width/2 + wheel_len/2}"/>
 
     <xacro:property name="sensor_rad" value=".03"/>
     <xacro:property name="sensor_len" value=".03"/>
+    <xacro:property name="sensor_mass" value="0.05"/>
 
     <xacro:property name="PI" value="3.1415"/>
 
@@ -54,7 +60,15 @@
             </material>
         </visual>
         <collision><geometry><box size="${base_depth} ${base_width} ${base_height}"/></geometry></collision>
-        <!--inertial />-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${base_mass}"/>
+            <inertia
+                ixx="${base_mass/12.0 * (base_width*base_width + base_height*base_height)}"
+                iyy="${base_mass/12.0 * (base_depth*base_depth + base_height*base_height)}"
+                izz="${base_mass/12.0 * (base_depth*base_depth + base_width*base_width)}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="left_wheel_link">
@@ -66,7 +80,15 @@
             <material name="red"/>
         </visual>
        <collision><geometry><cylinder radius="${drive_wheel_rad}" length="${wheel_len}"/></geometry></collision>
-        <!--inertial />-->
+       <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${wheel_mass}"/>
+            <inertia
+                ixx="${wheel_mass/12.0 * (3*drive_wheel_rad*drive_wheel_rad + wheel_len*wheel_len)}"
+                iyy="${wheel_mass/12.0 * (3*drive_wheel_rad*drive_wheel_rad + wheel_len*wheel_len)}"
+                izz="${wheel_mass/2.0 * drive_wheel_rad*drive_wheel_rad}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="right_wheel_link">
@@ -78,7 +100,15 @@
             <material name="red"/>
         </visual>
         <collision><geometry><cylinder radius="${drive_wheel_rad}" length="${wheel_len}"/></geometry></collision>
-        <!--inertial />-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${wheel_mass}"/>
+            <inertia
+                ixx="${wheel_mass/12.0 * (3*drive_wheel_rad*drive_wheel_rad + wheel_len*wheel_len)}"
+                iyy="${wheel_mass/12.0 * (3*drive_wheel_rad*drive_wheel_rad + wheel_len*wheel_len)}"
+                izz="${wheel_mass/2.0 * drive_wheel_rad*drive_wheel_rad}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="right_support_wheel_link">
@@ -90,7 +120,15 @@
             <material name="green"/>
         </visual>
         <collision><geometry><cylinder radius="${supp_wheel_rad}" length="${wheel_len}"/></geometry></collision>
-        <!--inertial />-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${supp_wheel_mass}"/>
+            <inertia
+                ixx="${supp_wheel_mass/12.0 * (3*supp_wheel_rad*supp_wheel_rad + wheel_len*wheel_len)}"
+                iyy="${supp_wheel_mass/12.0 * (3*supp_wheel_rad*supp_wheel_rad + wheel_len*wheel_len)}"
+                izz="${supp_wheel_mass/2.0 * supp_wheel_rad*supp_wheel_rad}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="left_support_wheel_link">
@@ -102,7 +140,15 @@
             <material name="green"/>
         </visual>
         <collision><geometry><cylinder radius="${supp_wheel_rad}" length="${wheel_len}"/></geometry></collision>
-        <!--inertial />-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${supp_wheel_mass}"/>
+            <inertia
+                ixx="${supp_wheel_mass/12.0 * (3*supp_wheel_rad*supp_wheel_rad + wheel_len*wheel_len)}"
+                iyy="${supp_wheel_mass/12.0 * (3*supp_wheel_rad*supp_wheel_rad + wheel_len*wheel_len)}"
+                izz="${supp_wheel_mass/2.0 * supp_wheel_rad*supp_wheel_rad}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="left_support_link">
@@ -114,7 +160,15 @@
             <material name="teal"/>
         </visual>
         <collision><geometry><box size="${side_block_depth} ${side_block_width} ${side_block_height}"/></geometry></collision>
-        <!--inertial /-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${support_mass}"/>
+            <inertia
+                ixx="${support_mass/12.0 * (side_block_width*side_block_width + side_block_height*side_block_height)}"
+                iyy="${support_mass/12.0 * (side_block_depth*side_block_depth + side_block_height*side_block_height)}"
+                izz="${support_mass/12.0 * (side_block_depth*side_block_depth + side_block_width*side_block_width)}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="right_support_link">
@@ -126,7 +180,15 @@
             <material name="teal"/>
         </visual>
         <collision><geometry><box size="${side_block_depth} ${side_block_width} ${side_block_height}"/></geometry></collision>
-        <!--inertial /-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${support_mass}"/>
+            <inertia
+                ixx="${support_mass/12.0 * (side_block_width*side_block_width + side_block_height*side_block_height)}"
+                iyy="${support_mass/12.0 * (side_block_depth*side_block_depth + side_block_height*side_block_height)}"
+                izz="${support_mass/12.0 * (side_block_depth*side_block_depth + side_block_width*side_block_width)}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="top_block_link">
@@ -138,7 +200,15 @@
             <material name="teal"/>
         </visual>
         <collision><geometry><box size="${top_block_depth} ${top_block_width} ${top_block_height}"/></geometry></collision>/>
-        <!--inertial /-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${top_block_mass}"/>
+            <inertia
+                ixx="${top_block_mass/12.0 * (top_block_width*top_block_width + top_block_height*top_block_height)}"
+                iyy="${top_block_mass/12.0 * (top_block_depth*top_block_depth + top_block_height*top_block_height)}"
+                izz="${top_block_mass/12.0 * (top_block_depth*top_block_depth + top_block_width*top_block_width)}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link> 
 
     <link name="lidar_link">
@@ -150,7 +220,15 @@
             <material name="white"/>
         </visual>
         <collision><geometry><cylinder radius="${sensor_rad}" length="${sensor_len}"/></geometry></collision>
-        <!--inertial /-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${sensor_mass}"/>
+            <inertia
+                ixx="${sensor_mass/12.0 * (3*sensor_rad*sensor_rad + sensor_len*sensor_len)}"
+                iyy="${sensor_mass/12.0 * (3*sensor_rad*sensor_rad + sensor_len*sensor_len)}"
+                izz="${sensor_mass/2.0 * sensor_rad*sensor_rad}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <link name="camera_link">
@@ -162,7 +240,15 @@
             <material name="white"/>
         </visual>
         <collision><geometry><cylinder radius="${sensor_rad}" length="${sensor_len}"/></geometry></collision>/>
-        <!--inertial /-->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${sensor_mass}"/>
+            <inertia
+                ixx="${sensor_mass/12.0 * (3*sensor_rad*sensor_rad + sensor_len*sensor_len)}"
+                iyy="${sensor_mass/12.0 * (3*sensor_rad*sensor_rad + sensor_len*sensor_len)}"
+                izz="${sensor_mass/2.0 * sensor_rad*sensor_rad}"
+                ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
    
@@ -170,28 +256,28 @@
     <joint name="base_left_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel_link"/>
-        <origin xyz="-0.13 ${whell_posY} ${drive_wheel_posZ}" rpy="${PI/2.0} 0 0"/>
+        <origin xyz="-0.13 ${wheel_posY} ${drive_wheel_posZ}" rpy="${PI/2.0} 0 0"/>
         <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_left_support_wheel_joint" type="continuous"> <!-- continuous for kinematics reason-->
         <parent link="base_link"/>
         <child link="left_support_wheel_link"/>
-        <origin xyz="0.13 ${whell_posY} ${supp_whell_posZ}" rpy="${PI/2.0} 0 0"/>
+        <origin xyz="0.13 ${wheel_posY} ${supp_wheel_posZ}" rpy="${PI/2.0} 0 0"/>
         <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_right_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel_link"/>
-        <origin xyz="-0.13 -${whell_posY} ${drive_wheel_posZ}" rpy="${PI/2.0} 0 0"/>
+        <origin xyz="-0.13 -${wheel_posY} ${drive_wheel_posZ}" rpy="${PI/2.0} 0 0"/>
         <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_right_support_wheel_joint" type="continuous"> <!-- continuous for kinematics reason-->
         <parent link="base_link"/>
         <child link="right_support_wheel_link"/>
-        <origin xyz="0.13 -${whell_posY} ${supp_whell_posZ}" rpy="${PI/2.0} 0 0"/>
+        <origin xyz="0.13 -${wheel_posY} ${supp_wheel_posZ}" rpy="${PI/2.0} 0 0"/>
         <axis xyz="0 0 1" />
     </joint>
 
@@ -229,8 +315,6 @@
         <origin xyz="0 0 -${(top_block_height)/2 + (sensor_len/2)}" rpy="0 0 0"/>
         <!--axis xyz="0 0 1" /-->
     </joint>
-    
-<!-- 2 - 1.1875 -->
 
 
 </robot>
