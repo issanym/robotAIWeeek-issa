@@ -27,7 +27,7 @@ class LidarSubscriber(Node):
             front_left_sector = msg.ranges[0:63]
             front_right_sector = msg.ranges[-63:] # Wraps around the 360-degree mark
             left_up_sector = msg.ranges[63:125] 
-            left_down_sector = msg.ranges[63:188]
+            left_down_sector = msg.ranges[125:188]
             right_up_sector = msg.ranges[375:439]
             right_down_sector = msg.ranges[313:375]
             
@@ -48,23 +48,21 @@ class LidarSubscriber(Node):
                     msg_t.angular.z = 0.8
                     self.get_logger().info(f'Closest threat ahead: {obstacle_front:.2f}m')
                     self.pub_vel.publish(msg_t)
-                    return
-                    
+                    return        
             if valid_ranges_right:
-                obstacle_right = min(valid_ranges_front)
+                obstacle_right = min(valid_ranges_right)
                 if obstacle_right < 0.10:
                     msg_t.linear.x = 0.0
                     msg_t.angular.z = -0.8
-                    self.get_logger().info(f'Closest threat right: {obstacle_right:.2f}m')
+                    self.get_logger().info(f'Obstacle right turning left: {msg_t.angular.z:.2f}m')
                     self.pub_vel.publish(msg_t)
-                    return
-                    
+                    return      
             if valid_ranges_leftt:
-                obstacle_left = min(valid_ranges_front)
+                obstacle_left = min(valid_ranges_leftt)
                 if obstacle_left < 0.10:
                     msg_t.linear.x = 0.0
                     msg_t.angular.z = 0.8
-                    self.get_logger().info(f'Closest threat left: {obstacle_left:.2f}m')
+                    self.get_logger().info(f'Obstacle left turning Right: {msg_t.angular.z:.2f}m')
                     self.pub_vel.publish(msg_t)
                     return
                     
