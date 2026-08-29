@@ -62,7 +62,7 @@ class LidarSubscriber(Node):
                     self.pub_vel.publish(msg_t)
                     return
                     
-            msg_t.linear.x = 1.0
+            msg_t.linear.x = 1.5
             msg_t.angular.z = 0.0
             self.get_logger().info(f'No Obstacle deteccted')
             self.pub_vel.publish(msg_t)
