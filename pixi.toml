@@ -9,8 +9,10 @@ version = "0.1.0"
 build = "colcon build"
 camera-follow = "ros2 run follower bullseye --ros-args -p camera_index:=0 -p show_debug_window:=true" # camera index to 0 for webcam
 lidar-start = "ros2 launch sllidar_ros2 sllidar_c1_launch.py"
-obstacle = "ros2 run lidarTest lidarTest"
+obstacle = "ros2 run lidarTest lidarTest --ros-args -r cmd_vel:=lidar_vel"
 tsim = "ros2 run turtlesim turtlesim_node"
+controller="ros2 run controller controller --ros-args -r cmd_vel:=joy_vel"
+mux="ros2 run twist_mux twist_mux --ros-args --params-file ~/Projects/robotAIWeeek-issa/src/external/twist_mux/config/twist_mux_topics.yaml"
 
 [activation]
 scripts = [
@@ -32,3 +34,5 @@ colcon-common-extensions = ">=0.3.0,<0.4"
 numpy = ">=2.5.1,<3"
 ros-humble-urdf-tutorial = ">=1.1.0,<2"
 ros-humble-turtlesim = ">=1.4.3,<2"
+pygame = ">=2.6.1,<3"
+ros-humble-twist-mux = ">=4.3.0,<5"

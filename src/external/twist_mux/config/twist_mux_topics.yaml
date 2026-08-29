@@ -1,0 +1,12 @@
+twist_mux:
+  ros__parameters:
+    topics:
+      lidar:
+        topic: 'lidar_vel'
+        timeout: 0.8
+        priority: 10
+      joystick:
+        topic: 'joy_vel'
+        timeout: 0.1
+        priority: 100
+    cmd_out: 'turtle1/cmd_vel'
