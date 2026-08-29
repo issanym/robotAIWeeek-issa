@@ -12,34 +12,30 @@ class LidarSubscriber(Node):
             '/scan',
             self.listener_callback,
             10)
+        # publisher to (/turtle1)/cmd_vel
         self.pub_vel = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
         self.linearX = 0.0
         self.angularZ = 0.0
 
     def listener_callback(self, msg):
-        # Total points in this specific spin
+        # Total points in this specific spin should be 500 points
         num_points = len(msg.ranges)
         msg_t = Twist()
         
         if num_points > 0:
             # Slice a 15-degree window to the left and 15-degree window to the right of 0 degrees
-            # (Assuming 500 points total, 15 degrees is roughly 21 indices)
             front_left_sector = msg.ranges[0:63]
-            front_right_sector = msg.ranges[-63:] # Wraps around the 360-degree mark
-            left_up_sector = msg.ranges[63:125] 
-            left_down_sector = msg.ranges[125:188]
-            right_up_sector = msg.ranges[375:439]
-            right_down_sector = msg.ranges[313:375]
+            front_right_sector = msg.ranges[-63:] 
             
-            # Combine the front view
+            # definind the detection zones
             front_cone = front_left_sector + front_right_sector
-            left_cone = left_up_sector + left_down_sector
-            right_cone = right_up_sector + right_down_sector
+            left_cone = msg.ranges[63:188]
+            right_cone = msg.ranges[313:439]
             
             # Clean out invalid 'inf' or '0.0' noise readings
             valid_ranges_front = [r for r in front_cone if msg.range_min < r < msg.range_max]
             valid_ranges_right = [r for r in right_cone if msg.range_min < r < msg.range_max]
-            valid_ranges_leftt = [r for r in left_cone if msg.range_min < r < msg.range_max]
+            valid_ranges_left = [r for r in left_cone if msg.range_min < r < msg.range_max]
             
             if valid_ranges_front:
                 obstacle_front = min(valid_ranges_front)
@@ -57,8 +53,8 @@ class LidarSubscriber(Node):
                     self.get_logger().info(f'Obstacle right turning left: {msg_t.angular.z:.2f}m')
                     self.pub_vel.publish(msg_t)
                     return      
-            if valid_ranges_leftt:
-                obstacle_left = min(valid_ranges_leftt)
+            if valid_ranges_left:
+                obstacle_left = min(valid_ranges_left)
                 if obstacle_left < 0.10:
                     msg_t.linear.x = 0.0
                     msg_t.angular.z = 0.8
