@@ -1,7 +1,8 @@
-import rclpy
+import rclpy  # noqa: N999
+from geometry_msgs.msg import Twist
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import Twist
+
 
 class LidarSubscriber(Node):
     def __init__(self):
@@ -21,22 +22,22 @@ class LidarSubscriber(Node):
         # Total points in this specific spin should be 500 points
         num_points = len(msg.ranges)
         msg_t = Twist()
-        
+
         if num_points > 0:
             # Slice a 15-degree window to the left and 15-degree window to the right of 0 degrees
             front_left_sector = msg.ranges[0:63]
-            front_right_sector = msg.ranges[-63:] 
-            
+            front_right_sector = msg.ranges[-63:]
+
             # definind the detection zones
             front_cone = front_left_sector + front_right_sector
             left_cone = msg.ranges[63:188]
             right_cone = msg.ranges[313:439]
-            
+
             # Clean out invalid 'inf' or '0.0' noise readings
             valid_ranges_front = [r for r in front_cone if msg.range_min < r < msg.range_max]
             valid_ranges_right = [r for r in right_cone if msg.range_min < r < msg.range_max]
             valid_ranges_left = [r for r in left_cone if msg.range_min < r < msg.range_max]
-            
+
             if valid_ranges_front:
                 obstacle_front = min(valid_ranges_front)
                 if obstacle_front < 0.10:
@@ -44,7 +45,7 @@ class LidarSubscriber(Node):
                     msg_t.angular.z = 0.8
                     self.get_logger().info(f'Closest threat ahead: {obstacle_front:.2f}m')
                     self.pub_vel.publish(msg_t)
-                    return        
+                    return
             if valid_ranges_right:
                 obstacle_right = min(valid_ranges_right)
                 if obstacle_right < 0.10:
@@ -52,7 +53,7 @@ class LidarSubscriber(Node):
                     msg_t.angular.z = -0.8
                     self.get_logger().info(f'Obstacle right turning left: {msg_t.angular.z:.2f}m')
                     self.pub_vel.publish(msg_t)
-                    return      
+                    return
             if valid_ranges_left:
                 obstacle_left = min(valid_ranges_left)
                 if obstacle_left < 0.10:
@@ -61,14 +62,14 @@ class LidarSubscriber(Node):
                     self.get_logger().info(f'Obstacle left turning Right: {msg_t.angular.z:.2f}m')
                     self.pub_vel.publish(msg_t)
                     return
-                    
+
             msg_t.linear.x = 1.5
             msg_t.angular.z = 0.0
-            self.get_logger().info(f'No Obstacle deteccted')
+            self.get_logger().info('No Obstacle deteccted')
             self.pub_vel.publish(msg_t)
-            
 
-                
+
+
 
 def main(args=None):
     rclpy.init(args=args)

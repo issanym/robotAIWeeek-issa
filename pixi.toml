@@ -26,6 +26,7 @@ scripts = [
 QT_QPA_PLATFORM="xcb"
 GDK_BACKEND="x11"
 LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+ROS_DOMAIN_ID="42"
 
 [dependencies]
 ros-humble-desktop = ">=0.10.0,<0.11"

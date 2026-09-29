@@ -24,11 +24,11 @@ Run:
         -p target_distance:=0.6
 """
 
-import numpy as np
 import cv2
+import numpy as np
 import rclpy
-from rclpy.node import Node
 from geometry_msgs.msg import TwistStamped
+from rclpy.node import Node
 
 
 class ArucoFollower(Node):
