@@ -22,7 +22,7 @@ def generate_launch_description():
     robot_description = ParameterValue(Command(['xacro ', urdf_file]), value_type=str)
 
     twist_mux_params = PathJoinSubstitution([
-        FindPackageShare('twist_mux'), 'config', 'twist_mux_topics.yaml'
+        FindPackageShare('twist_mux'), 'config', 'twist_mux_topics.yaml'# ??????
     ])
 
     return LaunchDescription([

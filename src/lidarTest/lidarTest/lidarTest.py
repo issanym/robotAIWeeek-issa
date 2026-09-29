@@ -14,7 +14,7 @@ class LidarSubscriber(Node):
             self.listener_callback,
             10)
         # publisher to (/turtle1)/cmd_vel
-        self.pub_vel = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+        self.pub_vel = self.create_publisher(Twist, '/cmd_vel', 10)
         self.linearX = 0.0
         self.angularZ = 0.0
 
