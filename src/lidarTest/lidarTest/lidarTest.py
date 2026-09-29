@@ -1,4 +1,4 @@
-import rclpy  # noqa: N999
+import rclpy  
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
@@ -8,11 +8,7 @@ class LidarSubscriber(Node):
     def __init__(self):
         super().__init__('lidar_subscriber')
         # Subscribe to the /scan topic published by sllidar_ros2
-        self.subscription = self.create_subscription(
-            LaserScan,
-            '/scan',
-            self.listener_callback,
-            10)
+        self.subscription = self.create_subscription(LaserScan, '/scan', self.listener_callback, 10)
         # publisher to (/turtle1)/cmd_vel
         self.pub_vel = self.create_publisher(Twist, '/cmd_vel', 10)
         self.linearX = 0.0
