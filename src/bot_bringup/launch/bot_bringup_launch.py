@@ -28,6 +28,12 @@ def generate_launch_description():
     return LaunchDescription([
         lidar_launch,
         Node(
+            package='motor_cmd',
+            namespace='motor',
+            executable='motor_cmd',
+            name='motor_cmd',
+        ),
+        Node(
             package='robot_state_publisher',
             namespace='description',
             executable='robot_state_publisher',

@@ -4,7 +4,7 @@ from geometry_msgs.msg import Twist
 from rclpy.node import Node
 
 class Motor_cmd(Node):
-    def __int__(self):
+    def __init__(self):
         super().__init__('motor_cmd')
         self.vel_sub = self.create_subscription(Twist, '/cmd_vel', self.cmd_callback, 10)
         self.ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=3)
@@ -22,18 +22,18 @@ class Motor_cmd(Node):
             val=2
         elif msg.linear.x > 0 and msg.angular.z > 0:
             val=3
-        elif msg.linear.x > 0 and msg.angular.z < 0:
+        elif msg.linear.x < 0 and msg.angular.z < 0:
             val=6
-        elif msg.linear.x > 0 and msg.angular.z > 0:
+        elif msg.linear.x < 0 and msg.angular.z > 0:
             val=7
         else :
             val='x'
 
         byte = f"{val}".encode("utf-8")
-        self.cmd_send(byte)
+        self.ser.write(byte)
 
-    def cmd_send(self, code):
-        self.ser.write(code)
+    def disconct(self):
+        self.ser.close()
 
 
 def main(args=None):
@@ -43,6 +43,7 @@ def main(args=None):
         rclpy.spin(node)
     except KeyboardInterrupt:
         pass
+    node.disconct()
     node.destroy_node()
     rclpy.shutdown()
 
