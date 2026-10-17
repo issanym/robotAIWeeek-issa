@@ -36,7 +36,8 @@ class Controller(Node):
             return
 
         # 1. Pump internal event queue (Required by pygame to update hardware states)
-        pygame.event.pump()
+        #pygame.event.pump()
+        pygame._sdl2.controller.update()
 
         # 2. Directly POLL the hardware states (Values range from -1.0 to 1.0 automatically)
         stick_x = self.controller.get_axis(pygame.CONTROLLER_AXIS_LEFTX)/32768.0
